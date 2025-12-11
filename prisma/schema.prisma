@@ -14,3 +14,27 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Toy {
+  id       Int     @id @default(autoincrement())
+  name     String
+  material Material
+  weight   Float
+  children Child[]
+}
+
+model Child {
+  id      Int     @id @default(autoincrement())
+  name    String
+  address String
+  wasGood Boolean
+  toyId   Int?
+  toy     Toy?    @relation(fields: [toyId], references: [id], onDelete: SetNull)
+}
+
+enum Material {
+  wood
+  metal
+  plastic
+  other
+}
